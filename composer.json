@@ -1,0 +1,14 @@
+{
+    "name": "jenny/hexagonale-architecture-in-php-example",
+    "type": "project",
+    "require": {
+        "php": "^7.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jennifer Eschenhorn",
+            "email": "jennifer.eschenhorn@jimdo.com"
+        }
+    ]
+}
