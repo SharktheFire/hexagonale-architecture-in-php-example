@@ -4,14 +4,18 @@ namespace Jenny\ToDo\Web;
 
 class View
 {
+    /** @var string */
+    private $view;
+
     /** @var array */
     private $variables;
 
     /**
      * @param string $view
      */
-    public function __construct()
+    public function __construct(string $view)
     {
+        $this->view = $view;
         $this->variables = [];
     }
 
@@ -21,7 +25,7 @@ class View
     public function render() : string
     {
         ob_start();
-        require __DIR__ . "/ToDoView.php";
+        require $this->view;
         return ob_get_clean();
     }
 
