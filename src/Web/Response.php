@@ -2,6 +2,8 @@
 
 namespace Jenny\ToDo\Web;
 
+use Jenny\ToDo\Web\View as View;
+
 class Response
 {
     /**

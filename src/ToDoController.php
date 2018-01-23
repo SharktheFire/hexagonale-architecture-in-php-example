@@ -18,8 +18,10 @@ class ToDoController extends Web\Controller {
         parent::__construct($request, $response);
     }
 
-    public function listAction() {
-        $view = $this->view('Web/ToDoView.php');
+    public function createToDoAction() {
+        $view = $this->view('Views/CreateToDoView.php');
+
+        $view->title = 'hallo';
 
         $this->render($view);
     }

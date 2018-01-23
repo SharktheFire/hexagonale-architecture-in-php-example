@@ -71,11 +71,12 @@ abstract class Controller
     }
 
     /**
+     * @param string $path
      * @return View
      */
-    protected function view() : View
+    protected function view(string $path) : View
     {
-        return new View();
+        return new View($path);
     }
 
     /**
