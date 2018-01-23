@@ -20,6 +20,7 @@ class ToDoController extends Web\Controller {
 
     public function listAction() {
         $view = $this->view('Web/ToDoView.php');
-        echo $view->render();
+
+        $this->render($view);
     }
 }

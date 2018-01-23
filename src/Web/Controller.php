@@ -3,8 +3,8 @@
 namespace Jenny\ToDo\Web;
 
 use Jenny\ToDo\Web\Request as Request;
-use Jenny\ToDo\Web\View as View;
 use Jenny\ToDo\Web\Response as Response;
+use Jenny\ToDo\Web\View as View;
 
 abstract class Controller
 {
@@ -76,5 +76,13 @@ abstract class Controller
     protected function view() : View
     {
         return new View();
+    }
+
+    /**
+     * @param View $view
+     */
+    protected function render(View $view)
+    {
+        return $this->response->render($view);
     }
 }
