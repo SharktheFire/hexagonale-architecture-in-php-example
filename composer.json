@@ -1,8 +1,10 @@
 {
     "name": "jenny/hexagonale-architecture-in-php-example",
+    "description": "Example for hexagonal Architecture in PHP",
     "type": "project",
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "phpunit/phpunit": "^6.5"
     },
     "license": "MIT",
     "authors": [
@@ -10,5 +12,13 @@
             "name": "Jennifer Eschenhorn",
             "email": "jennifer.eschenhorn@jimdo.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Jenny\\ToDo\\": [
+                "src/",
+                "tests/"
+            ]
+        }
+    }
 }
