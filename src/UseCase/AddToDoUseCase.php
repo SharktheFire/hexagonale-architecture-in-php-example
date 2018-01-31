@@ -13,6 +13,11 @@ class AddToDoUseCase {
     }
 
     public function execute(ToDoRequest $request) {
-        // sachen machen
+        $id = $request->id;
+        $content = $request->content;
+
+        $toDo = new ToDo($id, $content);
+
+        $this->repository->addToDo($toDo);
     }
 }
