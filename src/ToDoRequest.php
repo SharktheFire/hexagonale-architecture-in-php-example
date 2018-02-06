@@ -8,7 +8,7 @@ class ToDoRequest {
 
     public $content;
 
-    public function __construct(stirng $id, string $content) {
+    public function __construct(string $id, string $content){
         $this->id = $id;
         $this->content = $content;
     }
