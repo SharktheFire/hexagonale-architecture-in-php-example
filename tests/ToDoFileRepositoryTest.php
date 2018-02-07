@@ -13,17 +13,33 @@ class ToDoFileRepositoryTest extends TestCase
         $this->repository = new ToDoFileRepository(__DIR__ . '/../toDos/');
     }
 
+    public function tearDown()
+    {
+        $this->deleteFiles();
+    }
+
     /**
      * @test
      */
-    public function itShouldCreateAndSaveToDo()
+    public function itShouldStoreToDo()
     {
         $id = '1';
         $content = 'some content';
-        $toDo = $this->repository->create($id, $content);
+        $toDo = new ToDo($id, $content);
 
-        $this->assertEquals($id, $toDo->id());
-        $this->assertEquals($content, $toDo->content());
+        $this->repository->store($toDo);
+
+        $filename = __DIR__ . '/../toDos/' . 'ToDo: ' . $toDo->id() . ' | ' . $toDo->content() . '.txt';
+
+        $this->assertEquals(true, file_exists($filename));
+    }
+
+    private function deleteFiles() {
+        foreach (scandir(__DIR__ . '/../toDos/') as $foundFile) {
+            if (Types::ALLOWED_FILE_TYPE === pathinfo($foundFile, PATHINFO_EXTENSION)) {
+                unlink(__DIR__ . '/../toDos/' . $foundFile);
+            }
+        }
     }
 }
 
