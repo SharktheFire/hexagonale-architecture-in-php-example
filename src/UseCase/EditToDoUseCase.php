@@ -27,7 +27,7 @@ class EditToDoUseCase implements UseCase
         $toDo->editContent($newContent);
         var_dump($toDo);
 
-        $this->repository->update($toDo);
+        $this->repository->store($toDo);
         var_dump($toDo);
 
         return new ToDoResponse($toDo);
