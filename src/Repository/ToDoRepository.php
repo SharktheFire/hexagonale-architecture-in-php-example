@@ -1,6 +1,8 @@
 <?php
 
-namespace SharktheFire\ToDo;
+namespace SharktheFire\ToDo\Repository;
+
+use SharktheFire\ToDo\ToDo;
 
 interface ToDoRepository {
     public function store(ToDo $toDo);

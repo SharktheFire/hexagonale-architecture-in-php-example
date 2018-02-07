@@ -1,9 +1,12 @@
 <?php
 
-namespace SharktheFire\ToDo;
+namespace SharktheFire\ToDo\Repository;
 
 use SharktheFire\ToDo\Exceptions\ToDoAlreadyExistsException;
 use SharktheFire\ToDo\Exceptions\ToDoNotExistsException;
+
+use SharktheFire\ToDo\ToDo;
+use SharktheFire\ToDo\Types;
 
 class ToDoFileRepository implements ToDoRepository
 {

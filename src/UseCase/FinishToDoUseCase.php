@@ -2,7 +2,7 @@
 
 namespace SharktheFire\ToDo\UseCase;
 
-use SharktheFire\ToDo\ToDoRepository;
+use SharktheFire\ToDo\Repository\ToDoRepository;
 use SharktheFire\ToDo\Request\ToDoRequest;
 use SharktheFire\ToDo\Response\ToDoResponse;
 

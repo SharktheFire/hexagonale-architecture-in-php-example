@@ -1,8 +1,11 @@
 <?php
 
-namespace SharktheFire\ToDo;
+namespace SharktheFire\ToDo\Repository;
 
 use PHPUnit\Framework\TestCase;
+
+use SharktheFire\ToDo\ToDo;
+use SharktheFire\ToDo\Types;
 
 class ToDoFileRepositoryTest extends TestCase
 {
