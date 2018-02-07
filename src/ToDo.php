@@ -7,9 +7,12 @@ class ToDo {
 
     private $content;
 
+    private $status;
+
     public function __construct(string $id, string $content) {
         $this->id = $id;
         $this->content = $content;
+        $this->status = false;
     }
 
     public function id() {
@@ -22,5 +25,9 @@ class ToDo {
 
     public function editContent(string $content) {
         $this->content = $content;
+    }
+
+    public function isFinished() {
+        return $this->status;
     }
 }

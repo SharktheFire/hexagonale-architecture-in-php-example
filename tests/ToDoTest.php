@@ -9,37 +9,13 @@ class ToDoTest extends TestCase
     /**
      * @test
      */
-    public function itShouldHaveId()
+    public function itShouldHaveStatusNotFinishedIfToDoCreated()
     {
         $id = '1';
         $content = 'some content';
         $toDo = new ToDo($id, $content);
 
-        $this->assertEquals($id, $toDo->id());
-
-        $id = '2';
-        $content = 'some other content';
-        $toDo = new ToDo($id, $content);
-
-        $this->assertEquals($id, $toDo->id());
-    }
-
-    /**
-     * @test
-     */
-    public function itShouldHaveContent()
-    {
-        $id = '1';
-        $content = 'some content';
-        $toDo = new ToDo($id, $content);
-
-        $this->assertEquals($content, $toDo->content());
-
-        $id = '2';
-        $content = 'some other content';
-        $toDo = new ToDo($id, $content);
-
-        $this->assertEquals($content, $toDo->content());
+        $this->assertEquals(false, $toDo->isFinished());
     }
 
     /**
