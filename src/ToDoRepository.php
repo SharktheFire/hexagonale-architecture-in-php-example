@@ -3,9 +3,11 @@
 namespace SharktheFire\ToDo;
 
 interface ToDoRepository {
-    public function create(string $id, string $content);
+    public function create(string $id, string $content): ToDo;
 
-    public function update(ToDo $toDo);
+    public function store(ToDo $toDo);
 
-    public function findToDoById(string $id);
+    public function delete(ToDo $toDo);
+
+    public function findToDoById(string $id): ToDo;
 }
