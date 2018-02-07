@@ -34,6 +34,25 @@ class ToDoFileRepositoryTest extends TestCase
         $this->assertEquals(true, file_exists($filename));
     }
 
+    /**
+     * @test
+     * @expectedException SharktheFire\ToDo\Exceptions\ToDoAlreadyExistsException
+     */
+    public function itShouldThrowExceptionIfToDoAlreadyExists()
+    {
+        $id = '1';
+        $content = 'some content';
+        $toDo = new ToDo($id, $content);
+
+        $this->repository->store($toDo);
+
+        $id = '1';
+        $content = 'some content';
+        $toDo = new ToDo($id, $content);
+
+        $this->repository->store($toDo);
+    }
+
     private function deleteFiles() {
         foreach (scandir(__DIR__ . '/../toDos/') as $foundFile) {
             if (Types::ALLOWED_FILE_TYPE === pathinfo($foundFile, PATHINFO_EXTENSION)) {

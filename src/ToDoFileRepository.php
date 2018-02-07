@@ -2,6 +2,8 @@
 
 namespace SharktheFire\ToDo;
 
+use SharktheFire\ToDo\Exceptions\ToDoAlreadyExistsException;
+
 class ToDoFileRepository implements ToDoRepository
 {
     private $filePath;
@@ -13,6 +15,11 @@ class ToDoFileRepository implements ToDoRepository
 
     public function store(ToDo $toDo)
     {
+        foreach ($this->findAllToDos() as $storedToDo) {
+            if ($toDo->id() === $storedToDo->id()) {
+                throw new ToDoAlreadyExistsException('ToDo existiert bereits!');
+            }
+        }
         file_put_contents($this->filename($toDo), serialize($toDo));
     }
 
