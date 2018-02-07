@@ -8,14 +8,20 @@ class ToDoFileRepositoryTest extends TestCase
 {
     private $repository;
 
+    private $filePath = __DIR__ . '/../toDos/';
+
     public function setUp()
     {
-        $this->repository = new ToDoFileRepository(__DIR__ . '/../toDos/');
+        $this->repository = new ToDoFileRepository($this->filePath);
     }
 
     public function tearDown()
     {
-        $this->deleteFiles();
+        foreach (scandir($this->filePath) as $foundFile) {
+            if (Types::ALLOWED_FILE_TYPE === pathinfo($foundFile, PATHINFO_EXTENSION)) {
+                unlink($this->filePath . $foundFile);
+            }
+        }
     }
 
     /**
@@ -29,7 +35,7 @@ class ToDoFileRepositoryTest extends TestCase
 
         $this->repository->store($toDo);
 
-        $filename = __DIR__ . '/../toDos/' . 'ToDo: ' . $toDo->id() . ' | ' . $toDo->content() . '.txt';
+        $filename = $this->filePath . 'ToDo: ' . $toDo->id() . ' | ' . $toDo->content() . '.txt';
 
         $this->assertEquals(true, file_exists($filename));
     }
