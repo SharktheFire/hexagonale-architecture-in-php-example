@@ -7,12 +7,12 @@ class ToDo {
 
     private $content;
 
-    private $status;
+    private $toggleIsFinished;
 
     public function __construct(string $id, string $content) {
         $this->id = $id;
         $this->content = $content;
-        $this->status = false;
+        $this->toggleIsFinished = false;
     }
 
     public function id() {
