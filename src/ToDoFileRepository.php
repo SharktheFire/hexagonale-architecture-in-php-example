@@ -3,6 +3,7 @@
 namespace SharktheFire\ToDo;
 
 use SharktheFire\ToDo\Exceptions\ToDoAlreadyExistsException;
+use SharktheFire\ToDo\Exceptions\ToDoNotExistsException;
 
 class ToDoFileRepository implements ToDoRepository
 {
@@ -32,11 +33,18 @@ class ToDoFileRepository implements ToDoRepository
     {
         $unserializedToDos = $this->findAllToDos();
 
+        $foundToDo = [];
         foreach ($unserializedToDos as $toDo) {
             if ($id === $toDo->id()) {
-                return $toDo;
+                $foundToDo = $toDo;
             }
         }
+
+        if ($foundToDo === []) {
+            throw new ToDoNotExistsException('ToDo existiert nicht!');
+        }
+
+        return $foundToDo;
     }
 
     private function findAllToDos() {

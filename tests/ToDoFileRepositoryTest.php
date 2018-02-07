@@ -73,5 +73,31 @@ class ToDoFileRepositoryTest extends TestCase
 
         $this->assertFalse(file_exists($this->filePath . 'ToDo: ' . $toDo->id() . ' | ' . $toDo->content() . '.txt'));
     }
+
+    /**
+     * @test
+     */
+    public function itShouldFindToDoById()
+    {
+        $id = '1';
+        $content = 'some content';
+        $toDo = new ToDo($id, $content);
+
+        $this->repository->store($toDo);
+
+        $foundToDo = $this->repository->findToDoById($id);
+
+        $this->assertEquals($foundToDo->id(), $id);
+    }
+
+    /**
+     * @test
+     * * @expectedException SharktheFire\ToDo\Exceptions\ToDoNotExistsException
+     */
+    public function itShouldThrowExceptionIfToDoNotFound()
+    {
+        $someNotStoredId = '1';
+        $foundToDo = $this->repository->findToDoById($someNotStoredId);
+    }
 }
 
