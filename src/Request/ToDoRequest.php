@@ -1,6 +1,6 @@
 <?php
 
-namespace SharktheFire\ToDo;
+namespace SharktheFire\ToDo\Request;
 
 class ToDoRequest {
 

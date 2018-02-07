@@ -3,8 +3,8 @@
 namespace SharktheFire\ToDo\UseCase;
 
 use SharktheFire\ToDo\ToDoRepository;
-use SharktheFire\ToDo\ToDoRequest;
-use SharktheFire\ToDo\ToDoResponse;
+use SharktheFire\ToDo\Request\ToDoRequest;
+use SharktheFire\ToDo\Response\ToDoResponse;
 
 class AddToDoUseCase implements UseCase
 {
