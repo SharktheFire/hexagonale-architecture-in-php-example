@@ -21,6 +21,20 @@ class ToDoTest extends TestCase
     /**
      * @test
      */
+    public function itShouldHaveStatusIsFinishedIfToDoFinished()
+    {
+        $id = '1';
+        $content = 'some content';
+        $toDo = new ToDo($id, $content);
+
+        $toDo->toggleFinish();
+
+        $this->assertEquals(true, $toDo->isFinished());
+    }
+
+    /**
+     * @test
+     */
     public function itShouldEditContent()
     {
         $id = '1';

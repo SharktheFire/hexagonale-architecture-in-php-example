@@ -28,6 +28,10 @@ class ToDo {
     }
 
     public function isFinished() {
-        return $this->status;
+        return $this->toggleIsFinished;
+    }
+
+    public function toggleFinish() {
+        $this->toggleIsFinished = true;
     }
 }
