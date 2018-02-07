@@ -59,12 +59,19 @@ class ToDoFileRepositoryTest extends TestCase
         $this->repository->store($toDo);
     }
 
-    private function deleteFiles() {
-        foreach (scandir(__DIR__ . '/../toDos/') as $foundFile) {
-            if (Types::ALLOWED_FILE_TYPE === pathinfo($foundFile, PATHINFO_EXTENSION)) {
-                unlink(__DIR__ . '/../toDos/' . $foundFile);
-            }
-        }
+    /**
+     * @test
+     */
+    public function itShouldDeleteToDo()
+    {
+        $id = '1';
+        $content = 'some content';
+        $toDo = new ToDo($id, $content);
+
+        $this->repository->store($toDo);
+        $this->repository->delete($toDo);
+
+        $this->assertFalse(file_exists($this->filePath . 'ToDo: ' . $toDo->id() . ' | ' . $toDo->content() . '.txt'));
     }
 }
 

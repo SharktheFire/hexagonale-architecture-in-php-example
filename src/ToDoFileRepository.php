@@ -25,7 +25,7 @@ class ToDoFileRepository implements ToDoRepository
 
     public function delete(ToDo $toDo)
     {
-
+        unlink($this->filename($toDo));
     }
 
     public function findToDoById(string $id): ToDo
