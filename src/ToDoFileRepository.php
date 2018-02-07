@@ -14,14 +14,17 @@ class ToDoFileRepository implements ToDoRepository
     public function create(string $id, string $content)
     {
         $toDo = new ToDo($id, $content);
-        $this->update($toDo);
-
         return $toDo;
     }
 
-    public function update(ToDo $toDo)
+    public function store(ToDo $toDo)
     {
         file_put_contents($this->filename($toDo), serialize($toDo));
+    }
+
+    public function delete(ToDo $toDo)
+    {
+
     }
 
     public function findToDoById(string $id)
