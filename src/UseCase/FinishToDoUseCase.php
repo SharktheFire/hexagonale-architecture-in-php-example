@@ -5,7 +5,7 @@ namespace SharktheFire\ToDo\UseCase;
 use SharktheFire\ToDo\ToDoRepository;
 use SharktheFire\ToDo\ToDoResponse;
 
-class FindToDoUseCase implements UseCase
+class FininishToDoUseCase implements UseCase
 {
     private $repository;
 
