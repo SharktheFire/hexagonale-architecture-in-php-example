@@ -11,12 +11,6 @@ class ToDoFileRepository implements ToDoRepository
         $this->filePath = $filePath;
     }
 
-    public function create(string $id, string $content)
-    {
-        $toDo = new ToDo($id, $content);
-        return $toDo;
-    }
-
     public function store(ToDo $toDo)
     {
         file_put_contents($this->filename($toDo), serialize($toDo));

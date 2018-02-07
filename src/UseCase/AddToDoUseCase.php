@@ -20,7 +20,7 @@ class AddToDoUseCase implements UseCase
         $id = $request->id;
         $content = $request->content;
 
-        $toDo = $this->repository->create($id, $content);
+        $toDo = new ToDo($id, $content);
         $this->repository->store($toDo);
 
         return new ToDoResponse($toDo);
