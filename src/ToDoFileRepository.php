@@ -4,6 +4,8 @@ namespace SharktheFire\ToDo;
 
 class ToDoFileRepository implements ToDoRepository
 {
+    const ALLOWED_FILE_TYPE = 'txt';
+
     private $filePath;
 
     public function __construct(string $filePath)
@@ -36,12 +38,10 @@ class ToDoFileRepository implements ToDoRepository
         $foundToDos = [];
 
         foreach (scandir($this->filePath) as $foundFile) {
-            if ($foundFile === '.' || $foundFile === '..' || $foundFile === '.DS_Store') {
-                continue;
+            if (self::ALLOWED_FILE_TYPE === pathinfo($foundFile, PATHINFO_EXTENSION)) {
+                $foundToDos[] = unserialize(file_get_contents($this->filePath . $foundFile));
             }
-            $foundToDos[] = unserialize(file_get_contents($this->filePath . $foundFile));
         }
-
         return $foundToDos;
     }
 
