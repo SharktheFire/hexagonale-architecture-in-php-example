@@ -6,7 +6,7 @@ use SharktheFire\ToDo\Infrastructure\ToDoRepository;
 use SharktheFire\ToDo\Boundary\ToDoRequest;
 use SharktheFire\ToDo\Boundary\ToDoResponse;
 
-class EditToDoUseCase implements UseCase
+class EditToDoUseCase
 {
     private $repository;
 
