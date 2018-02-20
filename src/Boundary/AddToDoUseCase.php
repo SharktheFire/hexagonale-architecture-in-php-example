@@ -1,12 +1,12 @@
 <?php
 
-namespace SharktheFire\ToDo\UseCase;
+namespace SharktheFire\ToDo\Boundary;
 
-use SharktheFire\ToDo\Repository\ToDoRepository;
-use SharktheFire\ToDo\Request\ToDoRequest;
-use SharktheFire\ToDo\Response\ToDoResponse;
+use SharktheFire\ToDo\Infrastructure\ToDoRepository;
+use SharktheFire\ToDo\Boundary\ToDoRequest;
+use SharktheFire\ToDo\Boundary\ToDoResponse;
 
-class AddToDoUseCase implements UseCase
+class AddToDoUseCase
 {
     private $repository;
 
