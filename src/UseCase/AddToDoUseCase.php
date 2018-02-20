@@ -2,9 +2,9 @@
 
 namespace SharktheFire\ToDo\UseCase;
 
-use SharktheFire\ToDo\ToDoRepository;
-use SharktheFire\ToDo\ToDoRequest;
-use SharktheFire\ToDo\ToDoResponse;
+use SharktheFire\ToDo\Repository\ToDoRepository;
+use SharktheFire\ToDo\Request\ToDoRequest;
+use SharktheFire\ToDo\Response\ToDoResponse;
 
 class AddToDoUseCase implements UseCase
 {
@@ -20,7 +20,8 @@ class AddToDoUseCase implements UseCase
         $id = $request->id;
         $content = $request->content;
 
-        $toDo = $this->repository->create($id, $content);
+        $toDo = new ToDo($id, $content);
+        $this->repository->store($toDo);
 
         return new ToDoResponse($toDo);
     }

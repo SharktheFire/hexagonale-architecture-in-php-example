@@ -1,8 +1,8 @@
 <?php
 
-namespace SharktheFire\ToDo;
+namespace SharktheFire\ToDo\Response;
 
-class ToDoResponse
+class AddToDoResponse
 {
     public $toDo;
 

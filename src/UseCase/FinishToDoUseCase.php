@@ -2,10 +2,11 @@
 
 namespace SharktheFire\ToDo\UseCase;
 
-use SharktheFire\ToDo\ToDoRepository;
-use SharktheFire\ToDo\ToDoResponse;
+use SharktheFire\ToDo\Repository\ToDoRepository;
+use SharktheFire\ToDo\Request\ToDoRequest;
+use SharktheFire\ToDo\Response\ToDoResponse;
 
-class FindToDoUseCase implements UseCase
+class FininishToDoUseCase implements UseCase
 {
     private $repository;
 
