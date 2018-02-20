@@ -1,11 +1,13 @@
 <?php
 
-namespace SharktheFire\ToDo\Repository;
+namespace SharktheFire\ToDo\Infrastructure;
 
 use PHPUnit\Framework\TestCase;
 
 use SharktheFire\ToDo\ToDo;
 use SharktheFire\ToDo\Types;
+use SharktheFire\ToDo\Exceptions\ToDoAlreadyExistsException;
+use SharktheFire\ToDo\Exceptions\ToDoNotExistsException;
 
 class ToDoFileRepositoryTest extends TestCase
 {
@@ -45,10 +47,10 @@ class ToDoFileRepositoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException SharktheFire\ToDo\Exceptions\ToDoAlreadyExistsException
      */
     public function itShouldThrowExceptionIfToDoAlreadyExists()
     {
+        $this->expectException(ToDoAlreadyExistsException::class);
         $id = '1';
         $content = 'some content';
         $toDo = new ToDo($id, $content);
@@ -95,10 +97,10 @@ class ToDoFileRepositoryTest extends TestCase
 
     /**
      * @test
-     * * @expectedException SharktheFire\ToDo\Exceptions\ToDoNotExistsException
      */
     public function itShouldThrowExceptionIfToDoNotFound()
     {
+        $this->expectException(ToDoNotExistsException::class);
         $someNotStoredId = '1';
         $foundToDo = $this->repository->findToDoById($someNotStoredId);
     }
