@@ -1,6 +1,6 @@
 <?php
 
-namespace SharktheFire\ToDo\Request;
+namespace SharktheFire\ToDo\Boundary;
 
 class AddToDoRequest
 {

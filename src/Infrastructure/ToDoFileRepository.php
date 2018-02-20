@@ -1,6 +1,6 @@
 <?php
 
-namespace SharktheFire\ToDo\Repository;
+namespace SharktheFire\ToDo\Infrastructure;
 
 use SharktheFire\ToDo\Exceptions\ToDoAlreadyExistsException;
 use SharktheFire\ToDo\Exceptions\ToDoNotExistsException;

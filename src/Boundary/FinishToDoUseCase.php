@@ -2,9 +2,9 @@
 
 namespace SharktheFire\ToDo\UseCase;
 
-use SharktheFire\ToDo\Repository\ToDoRepository;
-use SharktheFire\ToDo\Request\ToDoRequest;
-use SharktheFire\ToDo\Response\ToDoResponse;
+use SharktheFire\ToDo\Infrastructure\ToDoRepository;
+use SharktheFire\ToDo\Boundary\ToDoRequest;
+use SharktheFire\ToDo\Boundary\ToDoResponse;
 
 class FininishToDoUseCase implements UseCase
 {
