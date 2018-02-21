@@ -3,8 +3,13 @@
 namespace SharktheFire\ToDo\Boundary;
 
 use SharktheFire\ToDo\Infrastructure\ToDoRepository;
-use SharktheFire\ToDo\Boundary\ToDoRequest;
-use SharktheFire\ToDo\Boundary\ToDoResponse;
+
+use SharktheFire\ToDo\Boundary\AddToDoRequest;
+use SharktheFire\ToDo\Boundary\AddToDoResponse;
+
+use SharktheFire\ToDo\ToDo;
+
+use SharktheFire\ToDo\Exceptions\RepositoryNotAvailableException;
 
 class AddToDoUseCase
 {
@@ -15,13 +20,18 @@ class AddToDoUseCase
         $this->repository = $repository;
     }
 
-    public function execute(ToDoRequest $request): ToDoResponse
+    public function execute(AddToDoRequest $request): AddToDoResponse
     {
-        $id = $request->id;
-        $content = $request->content;
+        $id = $request->getId();
+        $content = $request->getContent();
 
         $toDo = new ToDo($id, $content);
-        $this->repository->store($toDo);
+
+        try {
+            $this->repository->store($toDo);
+        } catch (Exception $e) {
+            throw new RepositoryNotAvailableException('Die Datenbank ist zur Zeit nicht erreichbar!');
+        }
 
         return new ToDoResponse($toDo);
     }
