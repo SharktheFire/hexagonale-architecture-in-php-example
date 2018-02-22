@@ -19,12 +19,29 @@ class ToDoFileRepository implements ToDoRepository
 
     public function store(ToDo $toDo)
     {
-        foreach ($this->findAllToDos() as $storedToDo) {
-            if ($toDo->id() === $storedToDo->id()) {
-                throw new ToDoAlreadyExistsException('ToDo existiert bereits!');
+        $foundToDos = $this->findAllToDos();
+
+        foreach ($foundToDos as $storedToDo) {
+
+            // AddToDo kann auch ein existierenden ToDo momentan verändern - alles andere funktioniert
+            if ($toDo->id() === $storedToDo->id() && $toDo->content() !== $storedToDo->content()) {
+                $this->delete($storedToDo);
+                file_put_contents($this->filename($toDo), serialize($toDo));
+                continue;
+            }
+
+            if ($toDo->id() === $storedToDo->id() || $toDo->content() === $storedToDo->content()) {
+                throw new ToDoAlreadyExistsException('Dieses ToDo existiert bereits!');
+            }
+
+            if ($toDo->id() !== $storedToDo->id() && $toDo->content() !== $storedToDo->content()) {
+                file_put_contents($this->filename($toDo), serialize($toDo));
             }
         }
-        file_put_contents($this->filename($toDo), serialize($toDo));
+
+        if ($foundToDos === []) {
+            file_put_contents($this->filename($toDo), serialize($toDo));
+        }
     }
 
     public function delete(ToDo $toDo)
