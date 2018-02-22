@@ -1,10 +1,15 @@
 <?php
 
-namespace SharktheFire\ToDo\UseCase;
+namespace SharktheFire\ToDo\Boundary;
 
 use SharktheFire\ToDo\Infrastructure\ToDoRepository;
-use SharktheFire\ToDo\Boundary\ToDoRequest;
-use SharktheFire\ToDo\Boundary\ToDoResponse;
+
+use SharktheFire\ToDo\Boundary\EditToDoRequest;
+use SharktheFire\ToDo\Boundary\EditToDoResponse;
+
+use SharktheFire\ToDo\ToDo;
+
+use SharktheFire\ToDo\Exceptions\RepositoryNotAvailableException;
 
 class EditToDoUseCase
 {
@@ -15,21 +20,30 @@ class EditToDoUseCase
         $this->repository = $repository;
     }
 
-    public function execute(ToDoRequest $request) : ToDoResponse
+    public function execute(EditToDoRequest $request): EditToDoResponse
     {
-        $id = $request->id;
-        $newContent = $request->content;
-        var_dump($newContent);
+        $id = $request->getId();
+        $newContent = $request->getContent();
 
-        $toDo = $this->repository->findToDoById($id);
-        var_dump($toDo);
+        // Tests und Exceptions mit Hauke durchgehen
+        // Add und Edit das gleiche?? - Speichern in die Datenbank - Edit nur noch suchen
+
+        try {
+            $toDo = $this->repository->findToDoById($id);
+        } catch (ToDoNotExistsException $e) {
+            // handle error
+        } catch (Exception $e) {
+            throw new RepositoryNotAvailableException('Die Datenbank ist zur Zeit nicht erreichbar!');
+        }
 
         $toDo->editContent($newContent);
-        var_dump($toDo);
 
-        $this->repository->store($toDo);
-        var_dump($toDo);
+        try {
+            $this->repository->store($toDo);
+        } catch (Exception $e) {
+            throw new RepositoryNotAvailableException('Die Datenbank ist zur Zeit nicht erreichbar!');
+        }
 
-        return new ToDoResponse($toDo);
+        return new EditToDoResponse($toDo);
     }
 }
