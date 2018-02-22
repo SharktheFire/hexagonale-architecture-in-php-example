@@ -2,6 +2,8 @@
 
 namespace SharktheFire\ToDo\Boundary;
 
+use SharktheFire\ToDo\ToDo;
+
 class AddToDoResponse
 {
     public $toDo;

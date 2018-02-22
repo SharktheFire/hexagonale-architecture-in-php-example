@@ -10,6 +10,7 @@ use SharktheFire\ToDo\Boundary\AddToDoResponse;
 use SharktheFire\ToDo\ToDo;
 
 use SharktheFire\ToDo\Exceptions\RepositoryNotAvailableException;
+use SharktheFire\ToDo\Exceptions\ToDoAlreadyExistsException;
 
 class AddToDoUseCase
 {
@@ -33,6 +34,6 @@ class AddToDoUseCase
             throw new RepositoryNotAvailableException('Die Datenbank ist zur Zeit nicht erreichbar!');
         }
 
-        return new ToDoResponse($toDo);
+        return new AddToDoResponse($toDo);
     }
 }
