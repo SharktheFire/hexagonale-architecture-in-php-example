@@ -2,8 +2,8 @@
 
 namespace SharktheFire\ToDo\Infrastructure;
 
-use SharktheFire\ToDo\Exceptions\ToDoAlreadyExistsException;
 use SharktheFire\ToDo\Exceptions\ToDoNotExistsException;
+use SharktheFire\ToDo\Exceptions\ToDoCouldNotSaveException;
 
 use SharktheFire\ToDo\ToDo;
 use SharktheFire\ToDo\Types;
@@ -19,52 +19,24 @@ class ToDoFileRepository implements ToDoRepository
 
     public function store(ToDo $toDo)
     {
-        $foundToDos = $this->findAllToDos();
-
-        foreach ($foundToDos as $storedToDo) {
-
-            // AddToDo kann auch ein existierenden ToDo momentan verändern - alles andere funktioniert
-            if ($toDo->id() === $storedToDo->id() && $toDo->content() !== $storedToDo->content()) {
-                $this->delete($storedToDo);
-                file_put_contents($this->filename($toDo), serialize($toDo));
-                continue;
-            }
-
-            if ($toDo->id() === $storedToDo->id() || $toDo->content() === $storedToDo->content()) {
-                throw new ToDoAlreadyExistsException('Dieses ToDo existiert bereits!');
-            }
-
-            if ($toDo->id() !== $storedToDo->id() && $toDo->content() !== $storedToDo->content()) {
-                file_put_contents($this->filename($toDo), serialize($toDo));
-            }
-        }
-
-        if ($foundToDos === []) {
+        try {
             file_put_contents($this->filename($toDo), serialize($toDo));
+        } catch (ToDoCouldNotSaveException $e) {
+            throw new ToDoCouldNotSaveException("Das ToDo konnte nicht gespeichert werden!");
         }
-    }
-
-    public function delete(ToDo $toDo)
-    {
-        unlink($this->filename($toDo));
     }
 
     public function findToDoById(string $id): ToDo
     {
         $unserializedToDos = $this->findAllToDos();
 
-        $foundToDo = [];
         foreach ($unserializedToDos as $toDo) {
             if ($id === $toDo->id()) {
-                $foundToDo = $toDo;
+                return $toDo;
             }
         }
 
-        if ($foundToDo === []) {
-            throw new ToDoNotExistsException('ToDo existiert nicht!');
-        }
-
-        return $foundToDo;
+        throw new ToDoNotExistsException('ToDo existiert nicht!');
     }
 
     private function findAllToDos() {

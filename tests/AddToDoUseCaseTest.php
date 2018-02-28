@@ -6,40 +6,20 @@ use PHPUnit\Framework\TestCase;
 
 use SharktheFire\ToDo\Boundary\AddToDoRequest;
 
-use SharktheFire\ToDo\NotAvailableRepository;
-use SharktheFire\ToDo\NotWriteableRepository;
-use SharktheFire\ToDo\Infrastructure\ToDoFileRepository;
+use SharktheFire\ToDo\CouldNotStoreRepository;
 
-use SharktheFire\ToDo\Exceptions\RepositoryNotAvailableException;
-use SharktheFire\ToDo\Exceptions\ToDoAlreadyExistsException;
+use SharktheFire\ToDo\Exceptions\ToDoCouldNotSaveException;
 
 class AddToDoUseCaseTest extends TestCase
 {
     /**
      * @test
      */
-    public function itShouldThrowExceptionIfRepositoryNotAvailable()
+    public function itShouldThrowExceptionIfToDoCannotStoreInRepository()
     {
-        $this->expectException(RepositoryNotAvailableException::class);
+        $this->expectException(ToDoCouldNotSaveException::class);
 
-        $repository = new NotAvailableRepository();
-        $useCase = new AddToDoUseCase($repository);
-
-        $response = $useCase->execute(
-            new AddToDoRequest('1', 'some content')
-        );
-    }
-
-// Muss der Test wirklich in der AddToDoUseCase sein oder eigentlich im Repository
-
-    /**
-     * @test
-     */
-    public function itShouldCatchExceptionIfToDoAlreadyExistsWithId()
-    {
-        $this->expectException(ToDoAlreadyExistsException::class);
-
-        $repository = new NotWriteableRepository();
+        $repository = new CouldNotStoreRepository();
         $useCase = new AddToDoUseCase($repository);
 
         $response = $useCase->execute(

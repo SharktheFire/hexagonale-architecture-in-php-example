@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 use SharktheFire\ToDo\ToDo;
 use SharktheFire\ToDo\Types;
-use SharktheFire\ToDo\Exceptions\ToDoAlreadyExistsException;
 use SharktheFire\ToDo\Exceptions\ToDoNotExistsException;
 
 class ToDoFileRepositoryTest extends TestCase
@@ -43,40 +42,6 @@ class ToDoFileRepositoryTest extends TestCase
         $filename = $this->filePath . 'ToDo: ' . $toDo->id() . ' | ' . $toDo->content() . '.txt';
 
         $this->assertEquals(true, file_exists($filename));
-    }
-
-    /**
-     * @test
-     */
-    public function itShouldThrowExceptionIfToDoAlreadyExists()
-    {
-        $this->expectException(ToDoAlreadyExistsException::class);
-        $id = '1';
-        $content = 'some content';
-        $toDo = new ToDo($id, $content);
-
-        $this->repository->store($toDo);
-
-        $id = '1';
-        $content = 'some content';
-        $toDo = new ToDo($id, $content);
-
-        $this->repository->store($toDo);
-    }
-
-    /**
-     * @test
-     */
-    public function itShouldDeleteToDo()
-    {
-        $id = '1';
-        $content = 'some content';
-        $toDo = new ToDo($id, $content);
-
-        $this->repository->store($toDo);
-        $this->repository->delete($toDo);
-
-        $this->assertFalse(file_exists($this->filePath . 'ToDo: ' . $toDo->id() . ' | ' . $toDo->content() . '.txt'));
     }
 
     /**
