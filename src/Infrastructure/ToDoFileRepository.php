@@ -4,7 +4,6 @@ namespace SharktheFire\ToDo\Infrastructure;
 
 use SharktheFire\ToDo\Exceptions\ToDoNotExistsException;
 use SharktheFire\ToDo\Exceptions\ToDoCouldNotSaveException;
-use SharktheFire\ToDo\Exceptions\ToDoAlreadyExistsWithIdException;
 
 use SharktheFire\ToDo\ToDo;
 use SharktheFire\ToDo\Types;
@@ -20,11 +19,6 @@ class ToDoFileRepository implements ToDoRepository
 
     public function store(ToDo $toDo)
     {
-        if ($this->findToDoById($toDo->id() !== null)) {
-            throw new ToDoAlreadyExistsWithIdException("ToDo existiert bereits mit dieser ID!");
-
-        }
-
         try {
             file_put_contents($this->filename($toDo), serialize($toDo));
         } catch (ToDoCouldNotSaveException $e) {
@@ -58,6 +52,6 @@ class ToDoFileRepository implements ToDoRepository
 
     private function filename(ToDo $toDo)
     {
-        return $this->filePath . 'ToDo: ' . $toDo->id() . ' | ' . $toDo->content() . '.txt';
+        return $this->filePath . 'ToDo: ' . $toDo->id() . '.txt';
     }
 }

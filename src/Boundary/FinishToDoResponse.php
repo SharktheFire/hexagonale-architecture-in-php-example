@@ -13,13 +13,8 @@ class FinishToDoResponse
         $this->toDo = $toDo;
     }
 
-    public function getId()
+    public function showStatus()
     {
-        return $this->toDo->id();
-    }
-
-    public function getContent()
-    {
-        return $this->toDo->content();
+        return $this->toDo->isFinished() ? 'true' : 'false';
     }
 }
