@@ -6,10 +6,10 @@ use PHPUnit\Framework\TestCase;
 
 use SharktheFire\ToDo\Boundary\EditToDoRequest;
 
-use SharktheFire\ToDo\NotAvailableRepository;
-use SharktheFire\ToDo\NotExistInRepository;
+use SharktheFire\ToDo\CouldNotStoreRepository;
+use SharktheFire\ToDo\NotExistsRepository;
 
-use SharktheFire\ToDo\Exceptions\RepositoryNotAvailableException;
+use SharktheFire\ToDo\Exceptions\ToDoCouldNotSaveException;
 use SharktheFire\ToDo\Exceptions\ToDoNotExistsException;
 
 class EditToDoUseCaseTest extends TestCase
@@ -17,11 +17,11 @@ class EditToDoUseCaseTest extends TestCase
     /**
      * @test
      */
-    public function itShouldThrowExceptionIfRepositoryNotAvailable()
+    public function itShouldThrowExceptionIfToDoCannotStoreInRepository()
     {
-        $this->expectException(RepositoryNotAvailableException::class);
+        $this->expectException(ToDoCouldNotSaveException::class);
 
-        $repository = new NotAvailableRepository();
+        $repository = new CouldNotStoreRepository();
         $useCase = new EditToDoUseCase($repository);
 
         $response = $useCase->execute(
@@ -32,11 +32,11 @@ class EditToDoUseCaseTest extends TestCase
     /**
      * @test
      */
-    public function itShouldCatchExceptionIfToDoNotExists()
+    public function itShouldThrowExceptionIfToDoNotExistsInRepository()
     {
         $this->expectException(ToDoNotExistsException::class);
 
-        $repository = new NotExistInRepository();
+        $repository = new NotExistsRepository();
         $useCase = new EditToDoUseCase($repository);
 
         $response = $useCase->execute(

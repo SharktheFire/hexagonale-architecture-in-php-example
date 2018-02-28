@@ -9,7 +9,7 @@ use SharktheFire\ToDo\Boundary\EditToDoResponse;
 
 use SharktheFire\ToDo\ToDo;
 
-use SharktheFire\ToDo\Exceptions\RepositoryNotAvailableException;
+use SharktheFire\ToDo\Exceptions\ToDoCouldNotSaveException;
 
 class EditToDoUseCase
 {
@@ -25,23 +25,13 @@ class EditToDoUseCase
         $id = $request->getId();
         $newContent = $request->getContent();
 
-        // Tests und Exceptions mit Hauke durchgehen
-        // Add und Edit das gleiche?? - Speichern in die Datenbank - Edit nur noch suchen
-
-        try {
-            $toDo = $this->repository->findToDoById($id);
-        } catch (ToDoNotExistsException $e) {
-            // handle error
-        } catch (Exception $e) {
-            throw new RepositoryNotAvailableException('Die Datenbank ist zur Zeit nicht erreichbar!');
-        }
-
+        $toDo = $this->repository->findToDoById($id);
         $toDo->editContent($newContent);
 
         try {
             $this->repository->store($toDo);
-        } catch (Exception $e) {
-            throw new RepositoryNotAvailableException('Die Datenbank ist zur Zeit nicht erreichbar!');
+        } catch (ToDoCouldNotSaveException $e) {
+            throw new ToDoCouldNotSaveException($e);
         }
 
         return new EditToDoResponse($toDo);
