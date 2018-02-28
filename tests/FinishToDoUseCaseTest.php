@@ -4,7 +4,7 @@ namespace SharktheFire\ToDo\Boundary;
 
 use PHPUnit\Framework\TestCase;
 
-use SharktheFire\ToDo\Boundary\EditToDoRequest;
+use SharktheFire\ToDo\Boundary\FinishToDoRequest;
 
 use SharktheFire\ToDo\CouldNotStoreRepository;
 use SharktheFire\ToDo\NotExistsRepository;
@@ -12,7 +12,7 @@ use SharktheFire\ToDo\NotExistsRepository;
 use SharktheFire\ToDo\Exceptions\ToDoCouldNotSaveException;
 use SharktheFire\ToDo\Exceptions\ToDoNotExistsException;
 
-class EditToDoUseCaseTest extends TestCase
+class FinishToDoUseCaseTest extends TestCase
 {
     /**
      * @test
@@ -22,10 +22,10 @@ class EditToDoUseCaseTest extends TestCase
         $this->expectException(ToDoCouldNotSaveException::class);
 
         $repository = new CouldNotStoreRepository();
-        $useCase = new EditToDoUseCase($repository);
+        $useCase = new FinishToDoUseCase($repository);
 
         $response = $useCase->execute(
-            new EditToDoRequest('1', 'some content')
+            new FinishToDoRequest('1', 'some content')
         );
     }
 
@@ -37,10 +37,10 @@ class EditToDoUseCaseTest extends TestCase
         $this->expectException(ToDoNotExistsException::class);
 
         $repository = new NotExistsRepository();
-        $useCase = new EditToDoUseCase($repository);
+        $useCase = new FinishToDoUseCase($repository);
 
         $response = $useCase->execute(
-            new EditToDoRequest('1', 'some content')
+            new FinishToDoRequest('1', 'some content')
         );
     }
 }

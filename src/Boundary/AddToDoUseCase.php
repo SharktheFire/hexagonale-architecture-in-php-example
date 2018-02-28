@@ -9,8 +9,7 @@ use SharktheFire\ToDo\Boundary\AddToDoResponse;
 
 use SharktheFire\ToDo\ToDo;
 
-use SharktheFire\ToDo\Exceptions\RepositoryNotAvailableException;
-use SharktheFire\ToDo\Exceptions\ToDoAlreadyExistsException;
+use SharktheFire\ToDo\Exceptions\ToDoCouldNotSaveException;
 
 class AddToDoUseCase
 {
@@ -30,8 +29,8 @@ class AddToDoUseCase
 
         try {
             $this->repository->store($toDo);
-        } catch (Exception $e) {
-            throw new RepositoryNotAvailableException('Die Datenbank ist zur Zeit nicht erreichbar!');
+        } catch (ToDoCouldNotSaveException $e) {
+            throw new ToDoCouldNotSaveException($e);
         }
 
         return new AddToDoResponse($toDo);

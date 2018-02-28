@@ -1,10 +1,15 @@
 <?php
 
-namespace SharktheFire\ToDo\UseCase;
+namespace SharktheFire\ToDo\Boundary;
+
+use SharktheFire\ToDo\ToDo;
 
 use SharktheFire\ToDo\Infrastructure\ToDoRepository;
-use SharktheFire\ToDo\Boundary\ToDoRequest;
-use SharktheFire\ToDo\Boundary\ToDoResponse;
+
+use SharktheFire\ToDo\Boundary\FinishToDoRequest;
+use SharktheFire\ToDo\Boundary\FinishToDoResponse;
+
+use SharktheFire\ToDo\Exceptions\ToDoCouldNotSaveException;
 
 class FinishToDoUseCase
 {
@@ -15,12 +20,21 @@ class FinishToDoUseCase
         $this->repository = $repository;
     }
 
-    public function execute(ToDoRequest $request) : ToDoResponse
+    public function execute(FinishToDoRequest $request): FinishToDoResponse
     {
-        $id = $request->id;
-
+        $id = $request->getId();
         $toDo = $this->repository->findToDoById($id);
 
-        return new ToDoResponse($toDo);
+        if (!$toDo->isFinished()) {
+            $toDo->toggleFinish();
+        }
+
+        try {
+            $this->repository->store($toDo);
+        } catch (ToDoCouldNotSaveException $e) {
+            throw new ToDoCouldNotSaveException($e);
+        }
+
+        return new FinishToDoResponse($toDo);
     }
 }
