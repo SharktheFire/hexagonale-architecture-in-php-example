@@ -39,7 +39,7 @@ class ToDoFileRepository implements ToDoRepository
         throw new ToDoNotExistsException('ToDo existiert nicht!');
     }
 
-    private function findAllToDos() {
+    public function findAllToDos(): array {
         $foundToDos = [];
 
         foreach (scandir($this->filePath) as $foundFile) {

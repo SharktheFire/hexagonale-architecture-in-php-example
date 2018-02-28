@@ -7,8 +7,6 @@ use SharktheFire\ToDo\Infrastructure\ToDoRepository;
 use SharktheFire\ToDo\Boundary\EditToDoRequest;
 use SharktheFire\ToDo\Boundary\EditToDoResponse;
 
-use SharktheFire\ToDo\ToDo;
-
 use SharktheFire\ToDo\Exceptions\ToDoCouldNotSaveException;
 
 class EditToDoUseCase

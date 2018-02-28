@@ -39,7 +39,7 @@ class ToDoFileRepositoryTest extends TestCase
 
         $this->repository->store($toDo);
 
-        $filename = $this->filePath . 'ToDo: ' . $toDo->id() . ' | ' . $toDo->content() . '.txt';
+        $filename = $this->filePath . 'ToDo: ' . $toDo->id() . '.txt';
 
         $this->assertEquals(true, file_exists($filename));
     }

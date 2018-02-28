@@ -14,8 +14,13 @@ class CouldNotStoreRepository implements ToDoRepository {
         throw new ToDoCouldNotSaveException();
     }
 
-    public function findToDoById(string $id) : ToDo
+    public function findToDoById(string $id): ToDo
     {
         return new ToDo('1', 'some content');
+    }
+
+    public function findAllToDos(): array
+    {
+        return [];
     }
 }

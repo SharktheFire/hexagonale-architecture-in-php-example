@@ -15,13 +15,13 @@ class NotExistsRepository implements ToDoRepository
         throw new ToDoCouldNotSaveException();
     }
 
-    // public function delete(ToDo $toDo)
-    // {
-    //     throw new RepositoryNotAvailableException();
-    // }
-
     public function findToDoById(string $id) : ToDo
     {
         throw new ToDoNotExistsException();
+    }
+
+    public function findAllToDos(): array
+    {
+        return [];
     }
 }
