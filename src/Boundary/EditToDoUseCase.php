@@ -24,7 +24,12 @@ class EditToDoUseCase
         $newContent = $request->getContent();
 
         $toDo = $this->repository->findToDoById($id);
-        $toDo->editContent($newContent);
+        $editContentIsPossible = false;
+
+        if ($toDo->isFinished() === false) {
+            $editContentIsPossible = true;
+            $toDo->editContent($newContent);
+        }
 
         try {
             $this->repository->store($toDo);
@@ -32,6 +37,6 @@ class EditToDoUseCase
             throw new ToDoCouldNotSaveException($e);
         }
 
-        return new EditToDoResponse($toDo);
+        return new EditToDoResponse($toDo, $editContentIsPossible);
     }
 }
