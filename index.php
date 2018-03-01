@@ -4,40 +4,109 @@ namespace SharktheFire\ToDo;
 
 require_once 'vendor/autoload.php';
 
-use SharktheFire\ToDo\UseCase\AddToDoUseCase;
-use SharktheFire\ToDo\UseCase\EditToDoUseCase;
+use SharktheFire\ToDo\Infrastructure\ToDoFileRepository;
 
-$useCase = new AddToDoUseCase(
-    new ToDoFileRepository(
-        __DIR__ . '/toDos/'
-        )
-    );
+use SharktheFire\ToDo\Boundary\AddToDoUseCase;
+use SharktheFire\ToDo\Boundary\AddToDoRequest;
 
-$response = $useCase->execute(
-    new ToDoRequest($argv[1], $argv[2])
-);
+use SharktheFire\ToDo\Boundary\EditToDoUseCase;
+use SharktheFire\ToDo\Boundary\EditToDoRequest;
 
-echo 'ToDo mit der ID ' . $response->toDo->id() . ' wurde ersellt!' . PHP_EOL;
+use SharktheFire\ToDo\Boundary\FinishToDoUseCase;
+use SharktheFire\ToDo\Boundary\FinishToDoRequest;
 
+use SharktheFire\ToDo\Boundary\ListToDosUseCase;
+use SharktheFire\ToDo\Boundary\ListToDosRequest;
 
-// $useCase = new EditToDoUseCase(
-//     new ToDoFileRepository(
-//         __DIR__ . '/toDos/'
-//         )
-//     );
+$errorMessage = "Etwas ist schiefgelaufen! Versuche es noch einmal. -> ";
 
-// $response = $useCase->execute(
-//     new ToDoRequest($argv[1], $argv[2])
-// );
+if (!isset($argv[1])) {
+    echo 'Bitte einen UseCase eingeben!' . PHP_EOL;
+    exit;
+}
 
-// echo 'Das ToDo mit der ID ' . $response->toDo->id() . ' wurde erfolgreich bearbeitet!' . PHP_EOL;
+$arguments = [
+    'fileExecuted' => $argv[0],
+    'useCase' => $argv[1],
+    'id' => !isset($argv[2]) ? '' : $argv[2],
+    'content' => !isset($argv[3]) ? '' : $argv[3]
+];
 
-$service = new Service();
+switch ($arguments['useCase']) {
+    case 'AddToDo':
+        $useCase = new AddToDoUseCase(
+            new ToDoFileRepository(
+                __DIR__ . '/toDos/'
+            )
+        );
 
+        try {
+            $response = $useCase->execute(
+                new AddToDoRequest($arguments['id'], $arguments['content'])
+            );
+            echo 'ToDo mit der ID ' . $response->toDo->id() . ' wurde ersellt!' . PHP_EOL;
+        } catch (\Exception $e) {
+            echo $errorMessage . $e->getMessage() . PHP_EOL;
+        }
 
-$useCase = new AddToDoUseCase(
-    $service['FileRepository']
-)
+        break;
+    case 'EditToDo':
+        $useCase = new EditToDoUseCase(
+            new ToDoFileRepository(
+                __DIR__ . '/toDos/'
+            )
+        );
+
+        try {
+            $response = $useCase->execute(
+                new EditToDoRequest($argv[2], $argv[3])
+            );
+            echo $response->showCorrectText();
+        } catch (\Exception $e) {
+            echo $errorMessage . $e->getMessage() . PHP_EOL;
+        }
+
+        break;
+    case 'FinishToDo':
+        $useCase = new FinishToDoUseCase(
+            new ToDoFileRepository(
+                __DIR__ . '/toDos/'
+            )
+        );
+
+        try {
+            $response = $useCase->execute(
+                new FinishToDoRequest($argv[2])
+            );
+            echo 'Das ToDo wurde erfolgreich abgehakt! -> ' . $response->showStatus() . PHP_EOL;
+        } catch (\Exception $e) {
+            echo $errorMessage . $e->getMessage() . PHP_EOL;
+        }
+
+        break;
+    case 'ListToDos':
+        $useCase = new ListToDosUseCase(
+            new ToDoFileRepository(
+                __DIR__ . '/toDos/'
+            )
+        );
+
+        try {
+            $response = $useCase->execute(
+                new ListToDosRequest()
+            );
+
+            foreach ($response->getToDos() as $toDo) {
+                echo 'ToDo: ' . $toDo->id() . ' mit dem Inhalt ' . $toDo->content() . PHP_EOL;
+            }
+        } catch (\Exception $e) {
+            echo $errorMessage . $e->getMessage() . PHP_EOL;
+        }
+
+        break;
+    default:
+        break;
+}
 
 
 
