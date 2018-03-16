@@ -44,7 +44,7 @@ switch ($arguments['useCase']) {
             $response = $useCase->execute(
                 new AddToDoRequest($arguments['id'], $arguments['content'])
             );
-            echo 'ToDo mit der ID ' . $response->toDo->id() . ' wurde ersellt!' . PHP_EOL;
+            echo 'ToDo mit der ID ' . $response->toDo->id() . ' wurde erstellt!' . PHP_EOL;
         } catch (\Exception $e) {
             echo $errorMessage . $e->getMessage() . PHP_EOL;
         }
@@ -61,7 +61,7 @@ switch ($arguments['useCase']) {
             $response = $useCase->execute(
                 new EditToDoRequest($argv[2], $argv[3])
             );
-            echo $response->showCorrectText();
+            echo $response->showCorrectText() . PHP_EOL;
         } catch (\Exception $e) {
             echo $errorMessage . $e->getMessage() . PHP_EOL;
         }
